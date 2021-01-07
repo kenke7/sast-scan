@@ -90,7 +90,7 @@ class GitHub(GitProvider):
                 summary = f'{summary}| {rv.get("tool")} | {rv.get("critical")} | {rv.get("high")} | {rv.get("medium")} | {rv.get("low")} | {status_emoji} |\n'
             template = config.get("PR_COMMENT_TEMPLATE")
             recommendation = (
-                """Please review the findings from Code scanning alerts before approving this pull request. You can also configure the [build rules](https://slscan.io/en/latest/integrations/tips/#config-file) or add [suppressions](https://slscan.io/en/latest/getting-started/#suppression) to customize this bot :thumbsup:"""
+                f"Please download the [artifact]({github_context.get('serverUrl')}/{github_context.get('repoFullname')}/actions/runs/{github_context.get('runID')}#artifacts) and review the findings before approving this pull request."
                 if build_status == "fail"
                 else "Looks good :heavy_check_mark:"
             )
@@ -173,13 +173,12 @@ class GitHub(GitProvider):
                 if not pull_requests:
                     LOG.debug("No Pull Requests are associated with this workflow run")
                     return
-                if findings:
-                    self.create_review(
-                        pull_requests,
-                        findings,
-                        github_context,
-                        report_summary,
-                        build_status,
-                    )
+                self.create_review(
+                    pull_requests,
+                    findings,
+                    github_context,
+                    report_summary,
+                    build_status,
+                )
             except Exception as e:
                 LOG.debug(e)

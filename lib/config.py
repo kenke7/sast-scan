@@ -65,7 +65,7 @@ SHIFTLEFT_VULN_API = "{}/api/v3/public/org/%(sl_org)s/app/%(app_name)s/version/%
     SHIFTLEFT_URI
 )
 
-PR_COMMENT_TEMPLATE = """## Scan Summary
+PR_COMMENT_TEMPLATE = """## Code Scan Summary
 
 %(summary)s
 
@@ -74,7 +74,7 @@ PR_COMMENT_TEMPLATE = """## Scan Summary
 %(recommendation)s
 """
 
-PR_COMMENT_BASIC_TEMPLATE = """## Scan Summary
+PR_COMMENT_BASIC_TEMPLATE = """## Code Scan Summary
 
 %(summary)s
 
@@ -122,7 +122,7 @@ ignore_directories = [
     ".idea",
     ".github",
     ".hg",
-    "dist",
+    # "dist",
     "obj",
     "backup",
     "docs",
